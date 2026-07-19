@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useContacts } from '../viewmodels/useContacts';
 import { useGiftHistory } from '../viewmodels/useGiftHistory';
 
 export default function HistoryScreen() {
-  const { contacts } = useContacts();
+  const { contacts, refetch } = useContacts();
   const { history, loading, error, addHistoryEntry } = useGiftHistory();
   const [selectedContactId, setSelectedContactId] = useState<string | null>(null);
   const [cadeau, setCadeau] = useState('');
   const [dateOfferte, setDateOfferte] = useState('');
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   async function handleAdd() {
     if (!selectedContactId || !cadeau || !dateOfferte) return;
