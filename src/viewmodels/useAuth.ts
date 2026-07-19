@@ -23,5 +23,11 @@ export function useAuth() {
     return !error;
   }
 
-  return { signUp, signIn, loading, error };
+  async function signOut() {
+  await supabase.auth.signOut();
+  
+}
+
+  return { signUp, signIn, signOut, loading, error };
+
 }
