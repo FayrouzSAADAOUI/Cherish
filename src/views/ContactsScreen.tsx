@@ -33,23 +33,46 @@ export default function ContactsScreen() {
       <Text style={styles.title}>Mes proches</Text>
 
       <View style={styles.form}>
-        <TextInput style={styles.input} placeholder="Nom" value={nom} onChangeText={setNom} />
+        <TextInput
+          style={styles.input}
+          placeholder="Nom"
+          accessibilityLabel="Nom du proche"
+          value={nom}
+          onChangeText={setNom}
+        />
         <TextInput
           style={styles.input}
           placeholder="Date de naissance (AAAA-MM-JJ)"
+          accessibilityLabel="Date de naissance, format année-mois-jour"
           value={dateNaissance}
           onChangeText={setDateNaissance}
         />
-        <TextInput style={styles.input} placeholder="Intérêts" value={interets} onChangeText={setInterets} />
+        <TextInput
+          style={styles.input}
+          placeholder="Intérêts"
+          accessibilityLabel="Centres d'intérêt"
+          value={interets}
+          onChangeText={setInterets}
+        />
         <TextInput
           style={styles.input}
           placeholder="Budget (€)"
+          accessibilityLabel="Budget en euros"
           keyboardType="numeric"
           value={budget}
           onChangeText={setBudget}
         />
-        {error && <Text style={styles.error}>{error}</Text>}
-        <Pressable style={styles.button} onPress={handleAdd}>
+        {error && (
+          <Text style={styles.error} accessibilityLiveRegion="polite">
+            {error}
+          </Text>
+        )}
+        <Pressable
+          style={styles.button}
+          onPress={handleAdd}
+          accessibilityRole="button"
+          accessibilityLabel="Ajouter ce proche"
+        >
           <Text style={styles.buttonText}>Ajouter</Text>
         </Pressable>
       </View>
@@ -62,7 +85,11 @@ export default function ContactsScreen() {
           keyExtractor={(item) => item.id}
           ListEmptyComponent={<Text style={styles.empty}>Aucun contact pour l'instant</Text>}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <View
+              style={styles.card}
+              accessible
+              accessibilityLabel={`${item.nom}, né le ${item.date_naissance}${item.interets ? `, intérêts : ${item.interets}` : ''}${item.budget != null ? `, budget ${item.budget} euros` : ''}`}
+            >
               <Text style={styles.cardName}>{item.nom}</Text>
               <Text style={styles.cardDetail}>{item.date_naissance}</Text>
               {item.interets && <Text style={styles.cardDetail}>Intérêts : {item.interets}</Text>}
@@ -72,7 +99,12 @@ export default function ContactsScreen() {
         />
       )}
 
-      <Pressable onPress={signOut} style={{ marginTop: 16 }}>
+      <Pressable
+        onPress={signOut}
+        style={{ marginTop: 16 }}
+        accessibilityRole="button"
+        accessibilityLabel="Se déconnecter"
+      >
         <Text style={{ textAlign: 'center', color: '#9B1B30' }}>Se déconnecter</Text>
       </Pressable>
     </View>

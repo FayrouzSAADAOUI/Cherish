@@ -35,6 +35,9 @@ export default function SuggestionsScreen() {
             <Pressable
               style={[styles.chip, selected?.id === item.id && styles.chipActive]}
               onPress={() => handleSelect(item)}
+              accessibilityRole="button"
+              accessibilityLabel={`Voir les suggestions pour ${item.nom}`}
+              accessibilityState={{ selected: selected?.id === item.id }}
             >
               <Text style={[styles.chipText, selected?.id === item.id && styles.chipTextActive]}>
                 {item.nom}
@@ -47,17 +50,24 @@ export default function SuggestionsScreen() {
       {selected && (
         <View style={styles.results}>
           {loadingSuggestions ? (
-            <ActivityIndicator style={{ marginTop: 20 }} />
+            <ActivityIndicator style={{ marginTop: 20 }} accessibilityLabel="Génération des suggestions en cours" />
           ) : error ? (
-            <Text style={styles.error}>{error}</Text>
+            <Text style={styles.error} accessibilityLiveRegion="polite">
+              {error}
+            </Text>
           ) : (
             <>
               {suggestions.map((s, i) => (
-                <View key={i} style={styles.card}>
+                <View key={i} style={styles.card} accessible accessibilityLabel={`Idée cadeau ${i + 1} : ${s}`}>
                   <Text style={styles.cardText}>{s}</Text>
                 </View>
               ))}
-              <Pressable style={styles.button} onPress={handleRegenerate}>
+              <Pressable
+                style={styles.button}
+                onPress={handleRegenerate}
+                accessibilityRole="button"
+                accessibilityLabel="Régénérer les suggestions"
+              >
                 <Text style={styles.buttonText}>Régénérer</Text>
               </Pressable>
             </>

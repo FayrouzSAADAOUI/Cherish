@@ -7,7 +7,11 @@ export default function RemindersScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rappels à venir</Text>
-      {error && <Text style={styles.error}>{error}</Text>}
+      {error && (
+        <Text style={styles.error} accessibilityLiveRegion="polite">
+          {error}
+        </Text>
+      )}
       {loading ? (
         <Text style={styles.empty}>Chargement...</Text>
       ) : (
@@ -16,7 +20,11 @@ export default function RemindersScreen() {
           keyExtractor={(item) => item.contactId}
           ListEmptyComponent={<Text style={styles.empty}>Aucun proche enregistré pour l'instant</Text>}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <View
+              style={styles.card}
+              accessible
+              accessibilityLabel={`${item.nom}, anniversaire le ${item.prochainAnniversaire}, dans ${item.joursRestants} jours${item.type ? `, rappel ${item.type}` : ''}`}
+            >
               <View style={styles.rowBetween}>
                 <Text style={styles.cardName}>{item.nom}</Text>
                 {item.type && (

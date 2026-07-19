@@ -37,6 +37,9 @@ export default function HistoryScreen() {
             <Pressable
               style={[styles.chip, selectedContactId === item.id && styles.chipActive]}
               onPress={() => setSelectedContactId(item.id)}
+              accessibilityRole="button"
+              accessibilityLabel={`Choisir ${item.nom} pour cette entrée d'historique`}
+              accessibilityState={{ selected: selectedContactId === item.id }}
             >
               <Text style={[styles.chipText, selectedContactId === item.id && styles.chipTextActive]}>
                 {item.nom}
@@ -44,15 +47,31 @@ export default function HistoryScreen() {
             </Pressable>
           )}
         />
-        <TextInput style={styles.input} placeholder="Cadeau offert" value={cadeau} onChangeText={setCadeau} />
+        <TextInput
+          style={styles.input}
+          placeholder="Cadeau offert"
+          accessibilityLabel="Nom du cadeau offert"
+          value={cadeau}
+          onChangeText={setCadeau}
+        />
         <TextInput
           style={styles.input}
           placeholder="Date (AAAA-MM-JJ)"
+          accessibilityLabel="Date à laquelle le cadeau a été offert, format année-mois-jour"
           value={dateOfferte}
           onChangeText={setDateOfferte}
         />
-        {error && <Text style={styles.error}>{error}</Text>}
-        <Pressable style={styles.button} onPress={handleAdd}>
+        {error && (
+          <Text style={styles.error} accessibilityLiveRegion="polite">
+            {error}
+          </Text>
+        )}
+        <Pressable
+          style={styles.button}
+          onPress={handleAdd}
+          accessibilityRole="button"
+          accessibilityLabel="Ajouter à l'historique"
+        >
           <Text style={styles.buttonText}>Ajouter à l'historique</Text>
         </Pressable>
       </View>
@@ -65,7 +84,11 @@ export default function HistoryScreen() {
           keyExtractor={(item) => item.id}
           ListEmptyComponent={<Text style={styles.empty}>Aucun cadeau enregistré pour l'instant</Text>}
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <View
+              style={styles.card}
+              accessible
+              accessibilityLabel={`${item.cadeau}, offert à ${(item as any).contacts?.nom ?? 'un contact'} le ${item.date_offert}`}
+            >
               <Text style={styles.cardName}>{item.cadeau}</Text>
               <Text style={styles.cardDetail}>
                 {(item as any).contacts?.nom ?? 'Contact'} · {item.date_offert}

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, Text, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../viewmodels/useAuth';
 
 export default function AuthScreen() {
@@ -19,6 +19,7 @@ export default function AuthScreen() {
       <TextInput
         style={styles.input}
         placeholder="Email"
+        accessibilityLabel="Adresse email"
         autoCapitalize="none"
         keyboardType="email-address"
         value={email}
@@ -27,15 +28,30 @@ export default function AuthScreen() {
       <TextInput
         style={styles.input}
         placeholder="Mot de passe"
+        accessibilityLabel="Mot de passe"
         secureTextEntry
         value={password}
         onChangeText={setPassword}
       />
-      {error && <Text style={styles.error}>{error}</Text>}
-      <Pressable style={styles.button} onPress={handleSubmit} disabled={loading}>
+      {error && (
+        <Text style={styles.error} accessibilityLiveRegion="polite">
+          {error}
+        </Text>
+      )}
+      <Pressable
+        style={styles.button}
+        onPress={handleSubmit}
+        disabled={loading}
+        accessibilityRole="button"
+        accessibilityLabel={isSignUp ? "S'inscrire" : 'Se connecter'}
+      >
         <Text style={styles.buttonText}>{loading ? '...' : isSignUp ? "S'inscrire" : 'Connexion'}</Text>
       </Pressable>
-      <Pressable onPress={() => setIsSignUp(!isSignUp)}>
+      <Pressable
+        onPress={() => setIsSignUp(!isSignUp)}
+        accessibilityRole="button"
+        accessibilityLabel={isSignUp ? 'Basculer vers la connexion' : "Basculer vers l'inscription"}
+      >
         <Text style={styles.switch}>
           {isSignUp ? 'Déjà un compte ? Se connecter' : "Pas de compte ? S'inscrire"}
         </Text>
