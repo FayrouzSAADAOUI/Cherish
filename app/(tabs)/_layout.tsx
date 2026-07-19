@@ -51,6 +51,19 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="historique"
+        options={{
+          title: 'Historique',
+          tabBarIcon: ({ color }) => (
+            <SymbolView
+              name={{ ios: 'clock.fill', android: 'history', web: 'history' }}
+              tintColor={color}
+              size={26}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
