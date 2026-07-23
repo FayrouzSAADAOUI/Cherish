@@ -64,7 +64,7 @@ export default function ContactsScreen() {
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <Text style={styles.title}>Vos proches</Text>
+      <Text style={styles.title}>Tes proches</Text>
 
       {loading ? (
         <Text style={styles.empty}>Chargement...</Text>
