@@ -39,5 +39,15 @@ export function useGiftHistory() {
     return true;
   }
 
-  return { history, loading, error, addHistoryEntry, refetch: fetchHistory };
+  async function deleteHistoryEntry(id: string) {
+    const { error } = await supabase.from('gift_history').delete().eq('id', id);
+    if (error) {
+      setError(error.message);
+      return false;
+    }
+    await fetchHistory();
+    return true;
+  }
+
+  return { history, loading, error, addHistoryEntry, deleteHistoryEntry, refetch: fetchHistory };
 }

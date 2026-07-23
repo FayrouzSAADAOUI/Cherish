@@ -40,6 +40,8 @@ describe('buildGiftPrompt', () => {
     date_naissance: '1998-03-15',
     interets: 'lecture',
     budget: 30,
+    relation: null,
+    notes: null,
     created_at: new Date().toISOString(),
   };
 

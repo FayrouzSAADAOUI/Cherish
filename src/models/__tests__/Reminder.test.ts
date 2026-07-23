@@ -5,7 +5,7 @@ describe('getNextBirthday', () => {
     const today = new Date('2026-07-19');
     const result = getNextBirthday('1998-07-26', today);
     expect(result.getFullYear()).toBe(2026);
-    expect(result.getMonth()).toBe(6); // juillet = index 6
+    expect(result.getMonth()).toBe(6);
     expect(result.getDate()).toBe(26);
   });
 
@@ -44,8 +44,12 @@ describe('getReminderType', () => {
     expect(getReminderType(1)).toBe('J-1');
   });
 
+  it('renvoie "J-0" pour le jour même', () => {
+    expect(getReminderType(0)).toBe('J-0');
+  });
+
   it('renvoie null pour un nombre de jours hors seuils', () => {
     expect(getReminderType(15)).toBeNull();
-    expect(getReminderType(0)).toBeNull();
+    expect(getReminderType(3)).toBeNull();
   });
 });

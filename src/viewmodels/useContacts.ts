@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../services/supabase';
+import { useCallback, useEffect, useState } from 'react';
 import { Contact, NewContact } from '../models/Contact';
+import { supabase } from '../services/supabase';
 
 export function useContacts() {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -39,5 +39,25 @@ export function useContacts() {
     return true;
   }
 
-  return { contacts, loading, error, addContact, refetch: fetchContacts };
+  async function deleteContact(id: string) {
+    const { error } = await supabase.from('contacts').delete().eq('id', id);
+    if (error) {
+      setError(error.message);
+      return false;
+    }
+    await fetchContacts();
+    return true;
+  }
+
+  async function updateContact(id: string, patch: Partial<NewContact>) {
+    const { error } = await supabase.from('contacts').update(patch).eq('id', id);
+    if (error) {
+      setError(error.message);
+      return false;
+    }
+    await fetchContacts();
+    return true;
+  }
+
+  return { contacts, loading, error, addContact, deleteContact, updateContact, refetch: fetchContacts };
 }

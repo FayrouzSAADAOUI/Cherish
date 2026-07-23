@@ -12,13 +12,17 @@ function getClient(): GoogleGenAI {
 }
 
 export function buildGiftPrompt(contact: Contact): string {
+  const budgetLine = contact.budget
+    ? `- Budget maximum : ${contact.budget} € (c'est un plafond, pas une cible : propose des idées à des prix variés, du plus abordable jusqu'à ce montant, pas uniquement des idées proches du maximum)`
+    : '- Budget : non précisé';
+
   return `Tu es un assistant qui suggère des idées cadeaux personnalisées.
 Voici le profil d'un proche :
 - Nom : ${contact.nom}
 - Intérêts : ${contact.interets ?? 'non précisés'}
-- Budget : ${contact.budget ? `${contact.budget} €` : 'non précisé'}
+${budgetLine}
 
-Propose exactement 3 idées cadeaux courtes et concrètes adaptées à ce profil, une par ligne, sans numérotation ni texte supplémentaire.`;
+Propose exactement 3 idées cadeaux courtes et concrètes adaptées à ce profil, avec des prix variés et différents les uns des autres dans le budget indiqué, une par ligne, sans numérotation ni texte supplémentaire.`;
 }
 
 export function parseSuggestions(text: string): string[] {

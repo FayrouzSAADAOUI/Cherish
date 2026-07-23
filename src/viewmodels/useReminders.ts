@@ -1,9 +1,16 @@
-import { useMemo } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useMemo } from 'react';
 import { getDaysUntil, getNextBirthday, getReminderType, UpcomingReminder } from '../models/Reminder';
 import { useContacts } from './useContacts';
 
 export function useReminders() {
-  const { contacts, loading, error } = useContacts();
+  const { contacts, loading, error, refetch } = useContacts();
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   const reminders: UpcomingReminder[] = useMemo(() => {
     return contacts
@@ -21,5 +28,5 @@ export function useReminders() {
       .sort((a, b) => a.joursRestants - b.joursRestants);
   }, [contacts]);
 
-  return { reminders, loading, error };
+  return { reminders, contacts, loading, error, refetch };
 }

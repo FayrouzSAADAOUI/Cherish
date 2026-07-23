@@ -5,10 +5,14 @@ export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function signUp(email: string, password: string) {
+  async function signUp(email: string, password: string, pseudo: string) {
     setLoading(true);
     setError(null);
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { pseudo } },
+    });
     setLoading(false);
     if (error) setError(error.message);
     return !error;
@@ -24,10 +28,8 @@ export function useAuth() {
   }
 
   async function signOut() {
-  await supabase.auth.signOut();
-  
-}
+    await supabase.auth.signOut();
+  }
 
   return { signUp, signIn, signOut, loading, error };
-
 }

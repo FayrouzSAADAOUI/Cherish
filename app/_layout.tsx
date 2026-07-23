@@ -1,17 +1,29 @@
+import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { useColorScheme } from '@/components/useColorScheme';
+import { theme } from '../src/theme';
 import { AuthProvider, useAuthContext } from '../src/viewmodels/AuthContext';
 
 export {
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 SplashScreen.preventAutoHideAsync();
+
+const cherishNavTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: theme.colors.primary,
+    background: theme.colors.background,
+    card: theme.colors.card,
+    text: theme.colors.textPrimary,
+    border: theme.colors.border,
+  },
+};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -40,7 +52,6 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
   const { session, loading } = useAuthContext();
 
   if (loading) {
@@ -48,11 +59,12 @@ function RootLayoutNav() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
+    <ThemeProvider value={cherishNavTheme}>
+      <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background } }}>
         <Stack.Protected guard={!!session}>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="contact/[id]" options={{ headerShown: false }} />
         </Stack.Protected>
         <Stack.Protected guard={!session}>
           <Stack.Screen name="login" options={{ headerShown: false }} />

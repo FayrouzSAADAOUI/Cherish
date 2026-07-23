@@ -1,4 +1,4 @@
-export type ReminderType = 'J-7' | 'J-1' | null;
+export type ReminderType = 'J-7' | 'J-1' | 'J-0' | null;
 
 export type UpcomingReminder = {
   contactId: string;
@@ -29,5 +29,6 @@ export function getDaysUntil(target: Date, today: Date = new Date()): number {
 export function getReminderType(joursRestants: number): ReminderType {
   if (joursRestants === 7) return 'J-7';
   if (joursRestants === 1) return 'J-1';
+  if (joursRestants === 0) return 'J-0';
   return null;
 }

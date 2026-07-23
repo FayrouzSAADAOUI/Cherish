@@ -1,1 +1,2 @@
-export { default } from '../../src/views/ContactsScreen';
+export { default } from '../../src/views/AccueilScreen';
+
