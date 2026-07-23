@@ -4,7 +4,7 @@ Une appli pour ne plus jamais oublier l'anniversaire d'un proche et surtout, pou
 
 ## Le principe
 
-Tu ajoutes tes proches (date de naissance, centres d'intérêt, budget), et CHERISH te prévient quand un anniversaire approche. Pour l'idée cadeau, une IA (Gemini) te propose des suggestions adaptées au profil de la personne, en tenant compte du budget donné comme un plafond,pas comme une cible, histoire d'avoir vraiment le choix.
+Vous ajoutez vos proches (date de naissance, centres d'intérêt, budget), et CHERISH vous prévient quand un anniversaire approche. Pour l'idée cadeau, une IA (Gemini) vous propose des suggestions adaptées au profil de la personne, en tenant compte du budget donné comme un plafond, pas comme une cible, histoire d'avoir vraiment le choix.
 
 Projet réalisé dans le cadre du Bloc 2 du titre RNCP 39583 (Expert en Développement Logiciel), Ynov Campus.
 
@@ -22,14 +22,14 @@ Architecture en MVVM (`src/views`, `src/viewmodels`, `src/models`, `src/services
 
 ## Tester l'application (Android)
 
-1. Télécharge le `.apk` depuis les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases)
-2. Ouvre le fichier téléchargé — Android peut demander d'autoriser l'installation depuis cette source (paramètre à activer une seule fois, normal pour toute app hors Play Store)
-3. Installe, puis ouvre l'app
+1. Téléchargez le `.apk` depuis les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases)
+2. Ouvrez le fichier téléchargé — Android peut demander d'autoriser l'installation depuis cette source (paramètre à activer une seule fois, normal pour toute app hors Play Store)
+3. Installez, puis ouvrez l'app
 
 Disponible uniquement sur Android pour l'instant (pas de build iOS). L'apk est un format natif Android : pour un test depuis un PC, un émulateur (BlueStacks, Android Studio) est nécessaire.
 
-> Pour tester rapidement sans rien configurer, télécharge directement l'apk fourni dans les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases), il est déjà configuré et fonctionnel.
-> Pour lancer le projet toi-même à partir du code source, tu dois créer tes propres comptes Supabase et Gemini, puis renseigner tes identifiants dans un fichier `.env` (voir `.env.example`).
+> Pour tester rapidement sans rien configurer, téléchargez directement l'apk fourni dans les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases), il est déjà configuré et fonctionnel.
+> Pour lancer le projet vous-même à partir du code source, vous devez créer vos propres comptes Supabase et Gemini, puis renseigner vos identifiants dans un fichier `.env` (voir `.env.example`).
 
 ## Installer le projet en local
 
@@ -39,7 +39,7 @@ cd Cherish
 npm install
 ```
 
-Il te faut ensuite un fichier `.env` à la racine (voir `.env.example`) avec :
+Il vous faut ensuite un fichier `.env` à la racine (voir `.env.example`) avec :
 
 EXPO_PUBLIC_SUPABASE_URL=
 EXPO_PUBLIC_SUPABASE_ANON_KEY=
@@ -51,7 +51,7 @@ Puis :
 npx expo start
 ```
 
-Scanne le QR code avec Expo Go, ou tape `w` pour lancer la version web.
+Scannez le QR code avec Expo Go, ou tapez `w` pour lancer la version web.
 
 ## Tests
 
