@@ -19,6 +19,18 @@ Projet réalisé dans le cadre du Bloc 2 du titre RNCP 39583 (Expert en Dévelop
 
 Architecture en MVVM (`src/views`, `src/viewmodels`, `src/models`, `src/services`), pour garder la logique métier découplée de l'affichage.
 
+
+## Tester l'application (Android)
+
+1. Télécharge le `.apk` depuis les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases)
+2. Ouvre le fichier téléchargé — Android peut demander d'autoriser l'installation depuis cette source (paramètre à activer une seule fois, normal pour toute app hors Play Store)
+3. Installe, puis ouvre l'app
+
+Disponible uniquement sur Android pour l'instant (pas de build iOS). L'apk est un format natif Android : pour un test depuis un PC, un émulateur (BlueStacks, Android Studio) est nécessaire.
+
+> Pour tester rapidement sans rien configurer, télécharge directement l'apk fourni dans les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases), il est déjà configuré et fonctionnel.
+> Pour lancer le projet toi-même à partir du code source, tu dois créer tes propres comptes Supabase et Gemini, puis renseigner tes identifiants dans un fichier `.env` (voir `.env.example`).
+
 ## Installer le projet en local
 
 ```bash
@@ -40,9 +52,6 @@ npx expo start
 ```
 
 Scanne le QR code avec Expo Go, ou tape `w` pour lancer la version web.
-
-> Pour tester rapidement sans configurer de backend, utilise directement l'apk fourni dans les [Releases](https://github.com/FayrouzSAADAOUI/Cherish/releases) — il contient déjà une configuration fonctionnelle.
-> Pour lancer le projet à partir du code source, il faut fournir tes propres identifiants Supabase et Gemini (voir `.env.example`).
 
 ## Tests
 
