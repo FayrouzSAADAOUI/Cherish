@@ -1,0 +1,51 @@
+name: Supervision - Disponibilité du Backend
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Vérifier la disponibilité de Supabase
+        id: probe
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${{ secrets.SUPABASE_URL }}/auth/v1/health")
+          echo "Code HTTP reçu : $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "Backend indisponible (HTTP $STATUS)"
+            exit 1
+          fi
+          echo "Backend disponible (HTTP $STATUS)"
+
+      - name: Créer une fiche d'incident automatique
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const date = new Date().toISOString();
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Incident supervision - Backend indisponible (${date})`,
+              body: `## Fiche de consignation d'anomalie
+
+**Date de détection** : ${date}
+**Sonde** : Vérification santé Supabase (/auth/v1/health)
+**Environnement** : Production (projet Supabase Cherish)
+**Symptôme** : La sonde automatique n'a pas reçu de réponse HTTP 200 dans le délai imparti (10s).
+
+### Impact
+L'application ne peut plus s'authentifier ni accéder aux données tant que le backend est indisponible.
+
+### Cause probable
+Mise en pause automatique du projet Supabase (tier gratuit, 7 jours d'inactivité) - cause la plus fréquente identifiée pour ce projet.
+
+### Correctif à appliquer
+1. Se connecter au dashboard Supabase
+2. Vérifier le statut du projet
+3. Si en pause : cliquer "Resume project" et patienter 30s-2min
+4. Relancer cette vérification manuellement (workflow_dispatch) pour confirmer le rétablissement`
+            });
