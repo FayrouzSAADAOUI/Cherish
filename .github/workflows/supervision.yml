@@ -1,4 +1,4 @@
-name: Supervision - Disponibilité du Backend
+name: Supervision - Disponibilité Backend
 
 on:
   schedule:
@@ -26,26 +26,29 @@ jobs:
         with:
           script: |
             const date = new Date().toISOString();
+            const body = [
+              "## Fiche de consignation d'anomalie",
+              "",
+              `**Date de détection** : ${date}`,
+              "**Sonde** : Vérification santé Supabase (/auth/v1/health)",
+              "**Environnement** : Production (projet Supabase Cherish)",
+              "**Symptôme** : La sonde automatique n'a pas reçu de réponse HTTP 200 dans le délai imparti (10s).",
+              "",
+              "### Impact",
+              "L'application ne peut plus s'authentifier ni accéder aux données tant que le backend est indisponible.",
+              "",
+              "### Cause probable",
+              "Mise en pause automatique du projet Supabase (tier gratuit, 7 jours d'inactivité) - cause la plus fréquente identifiée pour ce projet.",
+              "",
+              "### Correctif à appliquer",
+              "1. Se connecter au dashboard Supabase",
+              "2. Vérifier le statut du projet",
+              "3. Si en pause : cliquer \"Resume project\" et patienter 30s-2min",
+              "4. Relancer cette vérification manuellement (workflow_dispatch) pour confirmer le rétablissement"
+            ].join("\n");
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `Incident supervision - Backend indisponible (${date})`,
-              body: `## Fiche de consignation d'anomalie
-
-**Date de détection** : ${date}
-**Sonde** : Vérification santé Supabase (/auth/v1/health)
-**Environnement** : Production (projet Supabase Cherish)
-**Symptôme** : La sonde automatique n'a pas reçu de réponse HTTP 200 dans le délai imparti (10s).
-
-### Impact
-L'application ne peut plus s'authentifier ni accéder aux données tant que le backend est indisponible.
-
-### Cause probable
-Mise en pause automatique du projet Supabase (tier gratuit, 7 jours d'inactivité) - cause la plus fréquente identifiée pour ce projet.
-
-### Correctif à appliquer
-1. Se connecter au dashboard Supabase
-2. Vérifier le statut du projet
-3. Si en pause : cliquer "Resume project" et patienter 30s-2min
-4. Relancer cette vérification manuellement (workflow_dispatch) pour confirmer le rétablissement`
+              body: body
             });
