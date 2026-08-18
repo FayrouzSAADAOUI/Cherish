@@ -13,8 +13,12 @@ jobs:
     steps:
       - name: Vérifier la disponibilité de Supabase
         id: probe
+        env:
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" "${{ secrets.SUPABASE_URL }}/auth/v1/health")
+          echo "Longueur clé reçue : ${#SUPABASE_ANON_KEY} caractères | URL reçue : ${SUPABASE_URL}"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 -H "apikey: $SUPABASE_ANON_KEY" "$SUPABASE_URL/auth/v1/health")
           echo "Code HTTP reçu : $STATUS"
           if [ "$STATUS" -ne 200 ]; then
             echo "Backend indisponible (HTTP $STATUS)"
