@@ -8,6 +8,8 @@ on:
 jobs:
   healthcheck:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
     steps:
       - name: Vérifier la disponibilité de Supabase
         id: probe
