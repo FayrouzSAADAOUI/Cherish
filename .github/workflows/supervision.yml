@@ -12,7 +12,7 @@ jobs:
       - name: Vérifier la disponibilité de Supabase
         id: probe
         run: |
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "${{ secrets.SUPABASE_URL }}/auth/v1/health")
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" "${{ secrets.SUPABASE_URL }}/auth/v1/health")
           echo "Code HTTP reçu : $STATUS"
           if [ "$STATUS" -ne 200 ]; then
             echo "Backend indisponible (HTTP $STATUS)"
